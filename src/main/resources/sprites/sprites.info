@@ -1,0 +1,7 @@
+#player
+player/player-dead.png,58,58
+player/player-jump-right.png,58,58
+player/player-walk-right.png,58,58
+player/player-idle-right.png,58,58
+player/player-fall-right.png,58,58
+player/player-ground-right.png,58,58
