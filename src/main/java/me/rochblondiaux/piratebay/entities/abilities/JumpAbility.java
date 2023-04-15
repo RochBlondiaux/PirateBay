@@ -9,8 +9,15 @@ import de.gurkenlabs.litiengine.abilities.effects.EffectApplication;
 import de.gurkenlabs.litiengine.abilities.effects.EffectTarget;
 import de.gurkenlabs.litiengine.abilities.effects.ForceEffect;
 import de.gurkenlabs.litiengine.entities.*;
+import de.gurkenlabs.litiengine.graphics.RenderType;
+import de.gurkenlabs.litiengine.graphics.Spritesheet;
+import de.gurkenlabs.litiengine.graphics.emitters.Emitter;
+import de.gurkenlabs.litiengine.graphics.emitters.particles.SpriteParticle;
 import de.gurkenlabs.litiengine.physics.Force;
 import de.gurkenlabs.litiengine.physics.GravityForce;
+import de.gurkenlabs.litiengine.resources.Resources;
+
+import java.awt.geom.Point2D;
 
 /**
  * PirateBay
@@ -39,8 +46,19 @@ public class JumpAbility extends Ability {
 
         @Override
         protected void apply(ICombatEntity entity) {
-//            WalkParticleEmitter emitter = new WalkParticleEmitter(entity);
-//            Game.world().environment().add(emitter);
+            Spritesheet particleSprite = Resources.spritesheets().get("player-jump-particles");
+
+            double x = entity.getCollisionBoxCenter().getX();
+            double y = entity.getCollisionBox().getMinY() + particleSprite.getSpriteHeight() / 8.0;
+
+            Emitter emitter = new Emitter(new Point2D.Double(x, y));
+            SpriteParticle particle = new SpriteParticle(particleSprite);
+            particle.setAnimateSprite(true);
+            particle.setTimeToLive(500);
+            emitter.addParticle(particle);
+            emitter.setRenderType(RenderType.NORMAL);
+
+            Game.world().environment().add(emitter);
         }
     }
 
