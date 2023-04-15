@@ -3,14 +3,14 @@ package me.rochblondiaux.piratebay.entities;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.*;
-import de.gurkenlabs.litiengine.graphics.animation.AnimationController;
 import de.gurkenlabs.litiengine.graphics.animation.IEntityAnimationController;
-import de.gurkenlabs.litiengine.input.PlatformingMovementController;
 import de.gurkenlabs.litiengine.physics.Collision;
 import de.gurkenlabs.litiengine.physics.IMovementController;
 import lombok.Getter;
+import lombok.Setter;
 import me.rochblondiaux.piratebay.entities.abilities.JumpAbility;
 import me.rochblondiaux.piratebay.entities.animation.PlayerAnimationController;
+import me.rochblondiaux.piratebay.entities.controllers.PlayerMovementController;
 
 import java.awt.geom.Rectangle2D;
 
@@ -35,6 +35,10 @@ public class Player extends Creature implements IUpdateable {
     // State
     private int consecutiveJumps = 0;
     private boolean onGround = false;
+    @Setter
+    private boolean isEnteringDoor = false, isExitingDoor = false;
+    @Setter
+    private boolean controlsEnabled;
 
     public Player() {
         super("player");
@@ -44,6 +48,7 @@ public class Player extends Creature implements IUpdateable {
             instance = this;
 
         this.jumpAbility = new JumpAbility(this);
+        this.controlsEnabled = true;
         animations().scaleSprite(2);
     }
 
@@ -84,7 +89,7 @@ public class Player extends Creature implements IUpdateable {
     @Override
     protected IMovementController createMovementController() {
         // setup movement controller
-        return new PlatformingMovementController<>(this);
+        return new PlayerMovementController(this);
     }
 
     @Override

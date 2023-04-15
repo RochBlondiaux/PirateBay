@@ -1,6 +1,8 @@
 package me.rochblondiaux.piratebay.entities.animation;
 
+import de.gurkenlabs.litiengine.graphics.Spritesheet;
 import de.gurkenlabs.litiengine.graphics.animation.Animation;
+import de.gurkenlabs.litiengine.graphics.animation.AnimationListener;
 import de.gurkenlabs.litiengine.graphics.animation.CreatureAnimationController;
 import de.gurkenlabs.litiengine.resources.Resources;
 import me.rochblondiaux.piratebay.entities.Player;
@@ -20,17 +22,34 @@ public class PlayerAnimationController extends CreatureAnimationController<Playe
         registerAnimations("jump");
         registerAnimations("fall");
         registerAnimations("ground");
+        registerAnimations("doorin");
+        registerAnimations("doorout");
 
         // Rules
         addRule(player -> player.movement().getVelocity() == 0, player -> "player-idle-%s".formatted(player.getFacingDirection().toString().toLowerCase()));
+        addRule(Player::isExitingDoor, player -> "player-doorout-%s".formatted(player.getFacingDirection().toString().toLowerCase()));
+        addRule(Player::isEnteringDoor, player -> "player-doorin-%s".formatted(player.getFacingDirection().toString().toLowerCase()));
         addRule(player -> player.getJumpAbility().isActive(), player -> "player-jump-%s".formatted(player.getFacingDirection().toString().toLowerCase()));
         addRule(player -> !player.isOnGround(), player -> "player-fall-%s".formatted(player.getFacingDirection().toString().toLowerCase()));
+
+        addListener(new AnimationListener() {
+            @Override
+            public void finished(Animation animation) {
+                final Player player = PlayerAnimationController.this.getEntity();
+                if (animation.getName().contains("doorin") && player.isEnteringDoor())
+                    player.setEnteringDoor(false);
+                else if (animation.getName().contains("doorout") && player.isExitingDoor())
+                    player.setExitingDoor(false);
+            }
+        });
     }
 
     private void registerAnimations(String action) {
-        Animation rollAnimation = new Animation(Resources.spritesheets().get("player-%s-right".formatted(action)), false, false);
-        add(rollAnimation);
-        add(flipAnimation(rollAnimation, "player-%s-left".formatted(action)));
+        Spritesheet spritesheet = Resources.spritesheets().get("player-%s-right".formatted(action));
+        Animation animation = new Animation("player-%s-right".formatted(action), spritesheet, false, false);
+
+        add(animation);
+        add(flipAnimation(animation, "player-%s-left".formatted(action)));
     }
 
     @Override

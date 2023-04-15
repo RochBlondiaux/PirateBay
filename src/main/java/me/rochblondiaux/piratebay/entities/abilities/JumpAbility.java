@@ -4,17 +4,13 @@ import de.gurkenlabs.litiengine.Direction;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.abilities.Ability;
 import de.gurkenlabs.litiengine.abilities.AbilityInfo;
+import de.gurkenlabs.litiengine.abilities.effects.Effect;
 import de.gurkenlabs.litiengine.abilities.effects.EffectApplication;
 import de.gurkenlabs.litiengine.abilities.effects.EffectTarget;
 import de.gurkenlabs.litiengine.abilities.effects.ForceEffect;
-import de.gurkenlabs.litiengine.entities.CollisionBox;
-import de.gurkenlabs.litiengine.entities.Creature;
-import de.gurkenlabs.litiengine.entities.EntityPivotType;
-import de.gurkenlabs.litiengine.entities.IMobileEntity;
+import de.gurkenlabs.litiengine.entities.*;
 import de.gurkenlabs.litiengine.physics.Force;
 import de.gurkenlabs.litiengine.physics.GravityForce;
-
-import java.util.Optional;
 
 /**
  * PirateBay
@@ -33,6 +29,19 @@ public class JumpAbility extends Ability {
     public JumpAbility(Creature executor) {
         super(executor);
         this.addEffect(new JumpEffect(this));
+        this.addEffect(new JumpParticleEffect(this));
+    }
+
+    private static class JumpParticleEffect extends Effect {
+        protected JumpParticleEffect(Ability ability) {
+            super(ability, EffectTarget.EXECUTINGENTITY);
+        }
+
+        @Override
+        protected void apply(ICombatEntity entity) {
+//            WalkParticleEmitter emitter = new WalkParticleEmitter(entity);
+//            Game.world().environment().add(emitter);
+        }
     }
 
     private static class JumpEffect extends ForceEffect {
@@ -40,8 +49,6 @@ public class JumpAbility extends Ability {
         protected JumpEffect(Ability ability) {
             super(ability, ability.getAttributes().value().get().intValue(), EffectTarget.EXECUTINGENTITY);
         }
-
-
 
         @Override
         protected Force applyForce(IMobileEntity affectedEntity) {
