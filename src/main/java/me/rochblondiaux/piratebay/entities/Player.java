@@ -22,8 +22,8 @@ import java.awt.geom.Rectangle2D;
  *
  * @author Roch Blondiaux (Kiwix).
  */
-@EntityInfo(width = 58, height = 58)
-@CollisionInfo(collision = true, collisionBoxWidth = 58, collisionBoxHeight = 60)
+@EntityInfo(width = 41, height = 41)
+@CollisionInfo(collision = true, collisionBoxWidth = 42, collisionBoxHeight = 45)
 @MovementInfo(velocity = 250)
 @AnimationInfo(spritePrefix = "player")
 @Getter
@@ -51,7 +51,7 @@ public class Player extends Creature implements IUpdateable {
 
         this.jumpAbility = new JumpAbility(this);
         this.controlsEnabled = true;
-        animations().scaleSprite(2);
+        animations().scaleSprite(1.5f);
 
         onMoved(new WalkParticleSpawner());
     }

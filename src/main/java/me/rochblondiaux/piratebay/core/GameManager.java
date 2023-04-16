@@ -8,11 +8,16 @@ import de.gurkenlabs.litiengine.environment.GameWorld;
 import de.gurkenlabs.litiengine.environment.PropMapObjectLoader;
 import de.gurkenlabs.litiengine.graphics.Camera;
 import de.gurkenlabs.litiengine.graphics.PositionLockCamera;
+import de.gurkenlabs.litiengine.input.Input;
 import de.gurkenlabs.litiengine.resources.Resources;
 import me.rochblondiaux.piratebay.entities.Player;
+import me.rochblondiaux.piratebay.entities.enemies.Sailer;
 import me.rochblondiaux.piratebay.entities.environment.Bomb;
 import me.rochblondiaux.piratebay.entities.environment.Bottle;
 import me.rochblondiaux.piratebay.entities.environment.Door;
+
+import java.awt.event.KeyEvent;
+import java.awt.geom.Point2D;
 
 /**
  * PirateBay
@@ -88,5 +93,13 @@ public class GameManager {
         // Load the game world
         world.setGravity(400);
         world.loadEnvironment("lvl1");
+
+        Input.keyboard().onKeyReleased(KeyEvent.VK_E, event -> {
+            Point2D loc = Player.get().getLocation();
+
+            Sailer cucumber = new Sailer();
+            cucumber.setLocation(loc.getX(), loc.getY());
+            Player.get().getEnvironment().getSpawnpoint("spawnpoint").spawn(cucumber);
+        });
     }
 }
