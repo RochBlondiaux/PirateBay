@@ -16,8 +16,13 @@ props/prop-chair-intact.png,32,56
 props/prop-skull-intact.png,19,14
 props/prop-table-intact.png,80,32
 props/prop-bottles-intact.png,16,32
+props/candle/prop-candle-intact.png,14,32
+props/bomb/prop-bomb-intact.png,30,37
+props/bomb/prop-bomb-damaged.png,32,49
+props/bomb/prop-bomb-destroyed.png,176,160
 
 #misc
 player/particles/player-jump-particles.png,176,160
 player/particles/player-fall-particles.png,176,160
 player/particles/player-walk-particles.png,176,160
+props/candle/candle-particle.png,58,58

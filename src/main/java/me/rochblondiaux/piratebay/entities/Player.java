@@ -3,20 +3,15 @@ package me.rochblondiaux.piratebay.entities;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.*;
-import de.gurkenlabs.litiengine.graphics.RenderType;
-import de.gurkenlabs.litiengine.graphics.Spritesheet;
 import de.gurkenlabs.litiengine.graphics.animation.IEntityAnimationController;
-import de.gurkenlabs.litiengine.graphics.emitters.Emitter;
-import de.gurkenlabs.litiengine.graphics.emitters.particles.SpriteParticle;
 import de.gurkenlabs.litiengine.physics.Collision;
 import de.gurkenlabs.litiengine.physics.IMovementController;
-import de.gurkenlabs.litiengine.resources.Resources;
 import lombok.Getter;
 import lombok.Setter;
 import me.rochblondiaux.piratebay.entities.abilities.JumpAbility;
 import me.rochblondiaux.piratebay.entities.animation.PlayerAnimationController;
 import me.rochblondiaux.piratebay.entities.controllers.PlayerMovementController;
-import me.rochblondiaux.piratebay.entities.emitter.FallParticleSpawner;
+import me.rochblondiaux.piratebay.entities.emitter.FallParticleEmitter;
 import me.rochblondiaux.piratebay.entities.emitter.WalkParticleSpawner;
 
 import java.awt.geom.Rectangle2D;
@@ -68,7 +63,7 @@ public class Player extends Creature implements IUpdateable {
             animations().play("player-ground-%s".formatted(getFacingDirection().toString().toLowerCase()));
 
 
-            Game.world().environment().add(new FallParticleSpawner(this));
+            Game.world().environment().add(new FallParticleEmitter(this));
         }
         onGround = isTouchingGround;
 

@@ -10,6 +10,7 @@ import de.gurkenlabs.litiengine.graphics.Camera;
 import de.gurkenlabs.litiengine.graphics.PositionLockCamera;
 import de.gurkenlabs.litiengine.resources.Resources;
 import me.rochblondiaux.piratebay.entities.Player;
+import me.rochblondiaux.piratebay.entities.environment.Bomb;
 import me.rochblondiaux.piratebay.entities.environment.Bottle;
 import me.rochblondiaux.piratebay.entities.environment.Door;
 
@@ -33,13 +34,9 @@ public class GameManager {
         // Props
         PropMapObjectLoader.registerCustomPropType(Door.class);
         PropMapObjectLoader.registerCustomPropType(Bottle.class);
+        PropMapObjectLoader.registerCustomPropType(Bomb.class);
 
         world.addListener(new EnvironmentListener() {
-
-            @Override
-            public void initialized(Environment e) {
-
-            }
 
             @Override
             public void loaded(Environment e) {
@@ -89,7 +86,7 @@ public class GameManager {
         });
 
         // Load the game world
-        world.setGravity(350);
+        world.setGravity(400);
         world.loadEnvironment("lvl1");
     }
 }

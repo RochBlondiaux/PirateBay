@@ -14,16 +14,19 @@ import me.rochblondiaux.piratebay.entities.Player;
  *
  * @author Roch Blondiaux (Kiwix).
  */
-@EmitterInfo(duration = 200, particleMaxTTL = 200)
-public class FallParticleSpawner extends Emitter {
+@EmitterInfo(duration = 200, particleMaxTTL = 500, maxParticles = 1, spawnAmount = 1)
+public class FallParticleEmitter extends Emitter {
 
     private final Spritesheet particleSprite;
 
-    public FallParticleSpawner(Player player) {
+    public FallParticleEmitter(Player player) {
         super();
+        this.data().setEmitterDuration(500);
+        this.data().setMaxParticles(1);
+
         this.particleSprite = Resources.spritesheets().get("player-fall-particles");
         double x = player.getCollisionBox().getCenterX();
-        double y = player.getCollisionBox().getMinY() + particleSprite.getSpriteHeight() / 6.0;
+        double y = player.getCollisionBox().getMinY() + particleSprite.getSpriteHeight() / 8d;
 
         setLocation(x, y);
     }

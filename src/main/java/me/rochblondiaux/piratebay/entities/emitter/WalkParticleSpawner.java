@@ -47,6 +47,8 @@ public class WalkParticleSpawner implements IMobileEntity.EntityMovedListener {
         SpriteParticle particle = new SpriteParticle(walkDustSprite);
         particle.setAnimateSprite(true);
         particle.setTimeToLive(500);
+        walkDust.data().setMaxParticles(1);
+        walkDust.data().setEmitterDuration(500);
         walkDust.addParticle(particle);
         walkDust.setRenderType(RenderType.NORMAL);
 

@@ -25,7 +25,7 @@ import java.awt.geom.Point2D;
  *
  * @author Roch Blondiaux (Kiwix).
  */
-@AbilityInfo(cooldown = 500, origin = EntityPivotType.COLLISIONBOX_CENTER, duration = 200, value = 750)
+@AbilityInfo(cooldown = 300, origin = EntityPivotType.COLLISIONBOX_CENTER, duration = 300, value = 800)
 public class JumpAbility extends Ability {
 
     /**
@@ -52,6 +52,8 @@ public class JumpAbility extends Ability {
             double y = entity.getCollisionBox().getMinY() + particleSprite.getSpriteHeight() / 8.0;
 
             Emitter emitter = new Emitter(new Point2D.Double(x, y));
+            emitter.data().setEmitterDuration(500);
+            emitter.data().setMaxParticles(1);
             SpriteParticle particle = new SpriteParticle(particleSprite);
             particle.setAnimateSprite(true);
             particle.setTimeToLive(500);
